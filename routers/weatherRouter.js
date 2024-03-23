@@ -1,14 +1,7 @@
 import { Router } from "express";
-import { config } from "../config.js";
+import { weatherConfig } from "../config.js";
 
 const router = new Router();
-
-router.get("/", (req, res) => {
-	res.status(200).send(
-		// TODO: add a more meaningful message. TODO for each endpoint, perhaps.
-		"Specify the latitude and longitude you'd like to know the weather of in this format: '/weather/:city/:state'"
-	);
-});
 
 router.get("/:city/:state", async (req, res) => {
 	// extract query parameters
@@ -36,5 +29,18 @@ router.get("/:city/:state", async (req, res) => {
 	// send weather JSON data with success code 200
 	res.status(200).json(data);
 });
+
+// TODO: add more endpoints
+/**
+ * Air Pollution API: https://openweathermap.org/api/air-pollution
+ * - Get air quality information for a specified location
+ *
+ * Search cities by name
+ * Get weather by postal code
+ * 3-hour forecast 5 days for a (city, state)
+ *
+ * Wrap getting geoData into a function
+ *
+ */
 
 export default router;

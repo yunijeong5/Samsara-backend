@@ -17,10 +17,11 @@ RESTful API that fetches data from OpenWeatherMap
 ## Bonus Challenges
 
 -   Access Rate Limiter: Used `express-rate-limit` middleware. It allows us to define the maximum number of requests per IP address in a specific time window.
+-   (Maybe authentication)
 
 ## How to install & run
 
-```s
+```
 insert command to start the server
 ```
 

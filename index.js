@@ -7,7 +7,7 @@ import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 
 // router for code organization
-import router from "./routers/router.js";
+import weatherRouter from "./routers/weatherRouter.js";
 
 const app = express();
 
@@ -26,7 +26,13 @@ app.use(bodyParser.json());
 // app.use(limiter);
 
 // add routes
-app.use("/api", router);
+app.get("/", (req, res) => {
+	res.status(200).send(
+		// TODO: add a more meaningful message. TODO for each endpoint, perhaps.
+		"Specify the latitude and longitude you'd like to know the weather of in this format: '/weather/:city/:state'"
+	);
+});
+app.use("/weather", weatherRouter);
 
 // start server
 const port = process.env.PORT || 5000;
