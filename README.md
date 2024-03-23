@@ -14,9 +14,13 @@ RESTful API that fetches data from OpenWeatherMap
 -   Endpoints: 3 GET request endpoints
 -   Testing:
 
+## Bonus Challenges
+
+-   Access Rate Limiter: Used `express-rate-limit` middleware. It allows us to define the maximum number of requests per IP address in a specific time window.
+
 ## How to install & run
 
-```
+```s
 insert command to start the server
 ```
 
