@@ -1,39 +1,40 @@
 {
-  "name": "",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
-  "license": "AGPL-version-3.0",
-  "private": false,
-  "engines": {
-    "node": ">= 14.0.0",
-    "npm": ">= 6.0.0"
-  },
-  "homepage": "",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "bugs": "",
-  "keywords": [],
-  "author": {
-    "name": "",
-    "email": "",
-    "url": ""
-  },
-  "contributors": [],
-  "scripts": {
-    "dev": "",
-    "test": ""
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
-  },
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "express": "^4.19.1",
-    "morgan": "^1.10.0"
-  }
+	"name": "Samsara-backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"license": "AGPL-version-3.0",
+	"private": false,
+	"engines": {
+		"node": ">= 14.0.0",
+		"npm": ">= 6.0.0"
+	},
+	"homepage": "",
+	"repository": {
+		"type": "git",
+		"url": ""
+	},
+	"bugs": "",
+	"keywords": [],
+	"author": {
+		"name": "",
+		"email": "",
+		"url": ""
+	},
+	"contributors": [],
+	"scripts": {
+		"dev": "nodemon index.js",
+		"start": "node index.js",
+		"test": ""
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.0"
+	},
+	"dependencies": {
+		"body-parser": "^1.20.2",
+		"cors": "^2.8.5",
+		"express": "^4.19.1",
+		"morgan": "^1.10.0"
+	}
 }
