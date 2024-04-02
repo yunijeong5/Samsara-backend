@@ -11,7 +11,6 @@ import {
 	addDoc,
 } from "firebase/firestore";
 import { firebaseConfig } from "../config.js";
-import axios from "axios";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

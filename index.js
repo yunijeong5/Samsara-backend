@@ -24,13 +24,12 @@ const limiter = rateLimit({
 app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.json());
-// app.use(limiter);
+app.use(limiter);
 
 // add routes
 app.get("/", (req, res) => {
 	res.status(200).send(
-		// TODO: add a more meaningful message. TODO for each endpoint, perhaps.
-		"Specify the latitude and longitude you'd like to know the weather of in this format: '/weather/:city/:state'"
+		"<p>Air Quality endpoint: '/weather/air/:city/:state?/:country?'</p><p>Weather endpoint: '/weather/:city/:state?/:country?'</p><p>Geocoding endpoint: '/geo/:city/:state?/:country?'</p><p>For all endpoints, state and country are optional but they help you get more precise information</p>"
 	);
 });
 app.use("/weather", weatherRouter);
@@ -38,6 +37,8 @@ app.use("/geo", geoRouter);
 
 // start server
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
 	console.log(`Weather server is running on port ${port}...`);
 });
+
+export { app, server };
