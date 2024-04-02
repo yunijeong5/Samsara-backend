@@ -10,14 +10,14 @@ router.get("/:city/:state?/:country?", async (req, res) => {
 	const { city, state, country } = req.params;
 
 	try {
-		let geoData = await getGeoData(city, state, country);
-		if (!geoData.length) {
-			geoData = await fetchGeoDataFromAPI(city, state, country);
-			if (geoData.length) {
-				await cacheGeoData(geoData);
+		let geoDataArr = await getGeoData(city, state, country);
+		if (!geoDataArr.length) {
+			geoDataArr = await fetchGeoDataFromAPI(city, state, country);
+			if (geoDataArr.length) {
+				await cacheGeoData(geoDataArr);
 			}
 		}
-		res.json(geoData);
+		res.json(geoDataArr);
 	} catch (error) {
 		res.status(500).json({ message: "Failed to retrieve geo data" });
 	}

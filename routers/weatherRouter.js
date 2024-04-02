@@ -47,7 +47,7 @@ router.get("/:city/:state?/:country?", async (req, res) => {
 			res.json(weatherData);
 		} else {
 			console.log("Invalid city, state, or country");
-			res.json([]);
+			res.json({});
 		}
 	} catch (error) {
 		res.status(500).json({ message: "Failed to retrieve weather data" });

@@ -57,7 +57,6 @@ async function getGeoData(city, state, country) {
 			}
 			// state is state (as in US states)
 			else {
-				console.log("called", state);
 				q = query(
 					geoCollection,
 					where("name", ">=", cityName),
@@ -84,27 +83,30 @@ async function getGeoData(city, state, country) {
 async function cacheGeoData(geoDataArr) {
 	try {
 		const geoCollection = collection(db, "geo");
-		geoDataArr.map(async (geoDataObject) => {
+
+		// fetch existing documents to avoid duplicates
+		const existingGeoData = [];
+		const snapshot = await getDocs(geoCollection);
+		snapshot.forEach((doc) => {
+			existingGeoData.push(doc.data());
+		});
+
+		// filter out duplicate geoDataObjects from the input array
+		const uniqueGeoDataArr = geoDataArr.filter((geoDataObject) => {
+			return !existingGeoData.some(
+				(existingData) =>
+					existingData.lat === geoDataObject.lat &&
+					existingData.lon === geoDataObject.lon
+			);
+		});
+
+		// add unique geoDataObjects to the collection
+		uniqueGeoDataArr.map(async (geoDataObject) => {
 			await addDoc(geoCollection, geoDataObject);
 		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Failed to cache geo data");
-	}
-}
-
-async function getWeatherData(city, state, country) {
-	try {
-		// sent get request to geo Router endpoint
-		const q = [city, state, country].filter(Boolean).join("/");
-		const url = `http://localhost:5000/geo/${q}`;
-		const res = await axios.get(url);
-		const geoData = res.data;
-
-		// check weather collection by comparing latitude and longitude
-	} catch (error) {
-		console.error("Error retrieving weather data:", error);
-		throw new Error("Failed to retrieve weather data");
 	}
 }
 
