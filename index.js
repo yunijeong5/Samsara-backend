@@ -8,6 +8,7 @@ import rateLimit from "express-rate-limit";
 
 // router for code organization
 import weatherRouter from "./routers/weatherRouter.js";
+import geoRouter from "./routers/geoRouter.js";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 	);
 });
 app.use("/weather", weatherRouter);
+app.use("/geo", geoRouter);
 
 // start server
 const port = process.env.PORT || 5000;

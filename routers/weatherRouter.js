@@ -1,46 +1,55 @@
 import { Router } from "express";
-import { weatherConfig } from "../config.js";
+import {
+	fetchWeatherDataFromAPI,
+	fetchAirDataFromAPI,
+} from "../modules/weatherData.js";
+
+import axios from "axios";
 
 const router = new Router();
 
-router.get("/:city/:state", async (req, res) => {
-	// extract query parameters
-	const { city, state } = req.params;
+async function fetchGeoDataFromEndpoint(city, state, country) {
+	// sent get request to geo Router endpoint
+	const q = [city, state, country].filter(Boolean).join("/");
+	const url = `http://localhost:5000/geo/${q}`; // this endpoint handles fetching and caching geodata
+	const res = await axios.get(url);
+	return res.data;
+}
 
-	// generate URL to fetch data from
-	const geoCodingUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${state}&limit=5&appid=${config.API_KEY}`;
-
-	const fetchedGeoData = await fetch(geoCodingUrl);
-	const geoData = await fetchedGeoData.json();
-
-	// TODO: Error handling for invalid city, state info. geoData is [] for such inputs
-
-	// uses the first element if there are multiple cities with the same name in the same state
-	const location = geoData[0];
-
-	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&units=metric&appid=${config.API_KEY}`;
-
-	// parse fetched data into JSON format
-	const fetched = await fetch(url);
-	const data = await fetched.json();
-
-	// TODO: cache result in DB
-
-	// send weather JSON data with success code 200
-	res.status(200).json(data);
+router.get("/air/:city/:state?/:country?", async (req, res) => {
+	// extract query parameters and get associated geo data
+	const { city, state, country } = req.params;
+	try {
+		const geoData = await fetchGeoDataFromEndpoint(city, state, country);
+		if (geoData.length) {
+			const airData = await fetchAirDataFromAPI(geoData);
+			res.json(airData);
+		} else {
+			console.log("Invalid city, state, or country");
+			res.json([]);
+		}
+	} catch (error) {
+		res.status(500).json({
+			message: "Failed to retrieve air quality data",
+		});
+	}
 });
 
-// TODO: add more endpoints
-/**
- * Air Pollution API: https://openweathermap.org/api/air-pollution
- * - Get air quality information for a specified location
- *
- * Search cities by name
- * Get weather by postal code
- * 3-hour forecast 5 days for a (city, state)
- *
- * Wrap getting geoData into a function
- *
- */
+router.get("/:city/:state?/:country?", async (req, res) => {
+	// extract query parameters
+	const { city, state, country } = req.params;
+	try {
+		const geoData = await fetchGeoDataFromEndpoint(city, state, country);
+		if (geoData.length) {
+			const weatherData = await fetchWeatherDataFromAPI(geoData);
+			res.json(weatherData);
+		} else {
+			console.log("Invalid city, state, or country");
+			res.json([]);
+		}
+	} catch (error) {
+		res.status(500).json({ message: "Failed to retrieve weather data" });
+	}
+});
 
 export default router;
