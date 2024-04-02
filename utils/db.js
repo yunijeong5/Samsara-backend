@@ -57,6 +57,7 @@ async function getGeoData(city, state, country) {
 			}
 			// state is state (as in US states)
 			else {
+				console.log("called", state);
 				q = query(
 					geoCollection,
 					where("name", ">=", cityName),

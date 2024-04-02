@@ -10,11 +10,11 @@ RESTful API that fetches data from OpenWeatherMap
 
 -   Node.js Framework: Express
 -   Data Source: OpenWeatherMap
--   Database: Firebase for "caching" (more on it below)
+-   Database: Firebase for "caching" geo data from Geocoding API (more on it below)
 -   Endpoints: 3 GET request endpoints
-    -   ep 1
-    -   ep 2
-    -   ep 3
+    -   `/geo/:city/:state?/:country?`
+    -   `/weather/air/:city/:state?/:country?`
+    -   `/weather/:city/:state?/:country?`
 -   Testing:
 
 ### Is it really "caching" the results?

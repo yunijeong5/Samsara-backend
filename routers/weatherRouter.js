@@ -20,9 +20,11 @@ router.get("/air/:city/:state?/:country?", async (req, res) => {
 	// extract query parameters and get associated geo data
 	const { city, state, country } = req.params;
 	try {
-		const geoData = await fetchGeoDataFromEndpoint(city, state, country);
-		if (geoData.length) {
-			const airData = await fetchAirDataFromAPI(geoData);
+		const geoDataArr = await fetchGeoDataFromEndpoint(city, state, country);
+		if (geoDataArr.length) {
+			// there may be multiple locations with the same name (e.g., London in UK, London in USA)
+			// if so, return the first location's air quality data only
+			const airData = await fetchAirDataFromAPI(geoDataArr[0]);
 			res.json(airData);
 		} else {
 			console.log("Invalid city, state, or country");
@@ -39,9 +41,9 @@ router.get("/:city/:state?/:country?", async (req, res) => {
 	// extract query parameters
 	const { city, state, country } = req.params;
 	try {
-		const geoData = await fetchGeoDataFromEndpoint(city, state, country);
-		if (geoData.length) {
-			const weatherData = await fetchWeatherDataFromAPI(geoData);
+		const geoDataArr = await fetchGeoDataFromEndpoint(city, state, country);
+		if (geoDataArr.length) {
+			const weatherData = await fetchWeatherDataFromAPI(geoDataArr[0]);
 			res.json(weatherData);
 		} else {
 			console.log("Invalid city, state, or country");
