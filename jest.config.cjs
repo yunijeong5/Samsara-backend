@@ -5,5 +5,5 @@ module.exports = {
 		"^.+\\.js$": "babel-jest",
 	},
 	moduleFileExtensions: ["js"],
-	testMatch: ["**/__tests__/**/*.js", "**/?(*.)+(spec|test).js"],
+	testMatch: ["**/__tests__/**/test.js", "**/?(*.)+(spec|test).js"],
 };

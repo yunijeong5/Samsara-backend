@@ -15,16 +15,16 @@ RESTful API that fetches data from OpenWeatherMap
     -   `/geo/:city/:state?/:country?`
         -   Returns Geocoding API results for the specified city, state, and country. User can utilize the outputs to formulate their queries for the next two endpoints. Return value is an array of geodata objects.
         -   The result of geo data are cached in Firebase.
-    -   `/weather/air/:city/:state?/:country?`
+    -   `/weather/air-quality/:city/:state?/:country?`
         -   Returns Air Pollution API result for the specified city, state, and country. When the query is too broad (e.g. Just saying "/weather/boston/" is too broad as there are multiple cities with that name), it uses the first latitude and longitude of a location with that name retrieved either from the cached database or (if not cached) the Geocoding API.
     -   `/weather/:city/:state?/:country?`
         -   Returns the current weather data for the specified city, state, and country. When the query is too broad, similar to the air quality endpoint above, it uses cache or Geocoding result to select one location.
     -   Note that for all queries, state and country are optional.
--   Testing:
+-   Testing: Jest
 
-### Is it really "caching" the results?
+### Is it really "caching" the geo query results?
 
-No. Once saved, the data stays in the database until it is manually deleted. For a time-sensitive data like weather information, this arguably is a bad approach. The reason is that although Firebase supports TTL (Time To Live) polices for its documents, it is a paid feature at the moment. Hence, for the scope of this assignment, I decided not to implement the true caching functionalities. However, it can easily be done by upgrading the project's billing plan on Firebase Console and creating a TTL policy on Google Cloud Console. Once that setting has been changed, nothing in the source code needs to be updated.
+No. With current implementation, the data stays in the database until it is manually deleted. For a time-sensitive data like weather information, this arguably is a bad approach and hence only the geo queries are stored in the database. The reason is that although Firebase supports TTL (Time To Live) polices for its documents, it is a paid feature at the moment. Hence, for the scope of this assignment, I decided not to implement the true caching functionalities. However, it can easily be done by upgrading the project's billing plan on Firebase Console and creating a TTL policy on Google Cloud Console.
 
 ## Bonus Challenges
 
