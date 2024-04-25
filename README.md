@@ -33,11 +33,25 @@ No. With current implementation, the data stays in the database until it is manu
 ## How to install & run
 
 1. Download this repo (zip or clone)
-2. At the root level, run `npm start` in terminal. This starts the server locally at port `5000`.
-3. In your browser, type `http://localhost:5000`.
+2. At the root level of the project folder, run the following commands:
+
+```
+npm i
+npm start
+```
+
+3. In your browser, go to `http://localhost:5000`.
+
 4. According to the endpoint specification, start querying with the three endpoints above. You'll see the query results displayed on your browser.
 
 ## How to run tests
 
 1. Download this repo (zip or clone)
-2. At the root level, run `npm test` in terminal. This runs Jest tests and prints test result in the console.
+2. At the root level of the project folder, run the following commands:
+
+```
+npm i
+npm run test
+```
+
+This runs Jest tests and prints test result in the console.
